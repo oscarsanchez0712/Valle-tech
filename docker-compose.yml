@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  mysql-valletech:
+    image: mysql:8.0
+    container_name: mysql_valletech
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root123
+      MYSQL_DATABASE: valletech_db
+      MYSQL_USER: valletech
+      MYSQL_PASSWORD: valle2024
+    ports:
+      - "3307:3306"       # Puerto 3307 en host → 3306 en contenedor
+                           # Así no choca con tu MySQL local
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    command: --default-authentication-plugin=mysql_native_password
+
+volumes:
+  mysql_data:
